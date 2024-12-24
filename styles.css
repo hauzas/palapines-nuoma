@@ -1,0 +1,823 @@
+/* Global Styling */
+body {
+    margin: 0;
+    font-family: 'Anton SC', 'Funnel Sans', sans-serif;
+    font-weight: 400;
+    overflow-x: hidden;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+nav {
+    position: fixed;
+    height: 10vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(30, 30, 30, 0.5);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10vw;
+    border-bottom: 3px solid #000000;
+    z-index: 10;
+    transition: transform 0.3s ease;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+}
+
+nav.hidden {
+    transform: translateY(-100%);
+}
+
+/* Style for the full clickable logo area */
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    flex: 1;
+    text-align: left;
+    color: white;
+    text-decoration: none;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    /* Makes the logo element stretch across available space */
+    align-items: center;
+    /* Vertically centers the text */
+    transition: color 0.3s ease;
+}
+
+/* Style for the actual text */
+.logo-text {
+    position: relative;
+    display: inline-block;
+    /* Shrink to fit the text */
+    transition: color 0.3s ease;
+}
+
+.logo-text::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    /* Adjust as needed to align with the text */
+    left: 0;
+    right: 0;
+    height: 4px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transform: scaleX(0);
+    /* Hidden by default */
+    transform-origin: left;
+    /* Makes the animation start from the left */
+    transition: transform 0.3s ease;
+}
+
+/* Hover effects only apply to the text */
+.logo-text:hover {
+    color: #aaa;
+    /* Darken the text color */
+}
+
+.logo-text:hover::after {
+    transform: scaleX(1);
+    /* Show the underline effect */
+}
+
+.navigation {
+    display: flex;
+    justify-content: flex-end;
+    gap: 2vw;
+    pointer-events: auto;
+    align-items: center;
+    /* Vertically center the text links */
+}
+
+.navigation a {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 5px 0.5vw;
+    border-radius: 5px;
+    transition: color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    line-height: 1;
+}
+
+/* For button-like appearance */
+.navigation a.button {
+    padding: 10px 20px;
+    border-radius: 25px;
+}
+
+.navigation a::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 100%;
+    height: 4px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transform: translateX(-50%) scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.navigation a:hover {
+    color: #aaa;
+}
+
+.navigation a:hover::after {
+    transform: translateX(-50%) scaleX(1);
+}
+
+.navigation a.contact {
+    position: relative;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 15px 20px;
+    border-radius: 30px;
+    overflow: hidden;
+    transition: color 0.3s ease;
+}
+
+.navigation a.contact::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background-color: rgba(68, 68, 68, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+}
+
+.navigation a.contact:hover {
+    color: #ffffff;
+}
+
+.navigation a.contact:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Hamburger Icon Styles */
+.hamburger {
+    display: none;
+    cursor: pointer;
+    position: relative;
+    /* Ensure it stays on top */
+    z-index: 10;
+    /* Keep hamburger above the menu */
+}
+
+.hamburger span {
+    display: block;
+    width: 30px;
+    height: 4px;
+    background-color: white;
+    margin: 6px 0;
+    transition: transform 0.3s ease;
+}
+
+/* Hamburger Animation to X */
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* Dropdown Menu Styles */
+.dropdown-menu {
+    display: flex;
+    /* Start with flex for structure */
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    /* Start below the hamburger */
+    left: 0;
+    width: 100vw;
+    /* Full width */
+    background-color: rgba(30, 30, 30, 0.5);
+    backdrop-filter: blur(10px);
+    /* Dark background */
+    padding: 0;
+    /* Initially no padding */
+    gap: 0;
+    overflow: hidden;
+    /* Prevent content from spilling out */
+    height: 0;
+    /* Hidden by default */
+    opacity: 0;
+    /* Invisible by default */
+    transition: height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+    z-index: 10;
+    /* Ensure it stays above content */
+    align-items: flex-start;
+    border-bottom: 3px solid #000000;
+}
+
+/* When Menu is Open */
+.dropdown-menu.show {
+    height: auto;
+    /* Expands to fit content */
+    opacity: 1;
+    /* Fully visible */
+    padding: 20px;
+    /* Add spacing */
+    gap: 10px;
+    /* Add spacing between items */
+}
+
+/* Dropdown Links Styling */
+.dropdown-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    padding: 10px 20px;
+    transition: color 0.3s ease;
+    width: 100%;
+    text-align: left;
+}
+
+/* Hamburger Animation */
+.hamburger span {
+    display: block;
+    width: 30px;
+    height: 4px;
+    background-color: white;
+    margin: 6px 0;
+    transition: transform 0.3s ease;
+}
+
+/* Media Query for Mobile Devices */
+@media (max-width: 768px) {
+    .navigation {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+
+/* When Hamburger is Active, X appears */
+.hamburger.active span:nth-child(1) {
+    transform: rotate(45deg);
+    position: relative;
+    top: 10px;
+    /* Adjusted this value */
+}
+
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+    transform: rotate(-45deg);
+    position: relative;
+    top: -10px;
+    /* Adjusted this value */
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+/* Hero Section */
+.hero {
+    position: relative;
+    height: 100vh;
+    background: url('./assets/palapine.jpg') no-repeat center center/cover;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 1;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 70%, rgba(0, 0, 0, 0.95) 100%);
+    z-index: 2;
+}
+
+.hero-text {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+    color: white;
+}
+
+.hero-text h1 {
+    font-size: 5.5rem;
+    margin: 0;
+    opacity: 0;
+    text-shadow: 0 0 10px black, 0 0 20px black, 0 0 30px black;
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+.hero-text p {
+    font-size: 1.75rem;
+    margin-top: 10px;
+    /* Italy flag colors */
+    -webkit-background-clip: text;
+    color: #aaa;
+    /* Make text color transparent to show the gradient */
+    opacity: 1;
+    text-shadow: 0 0 10px black, 0 0 20px black, 0 0 30px black;
+    animation: fadeInUp 1.5s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 2vw;
+    margin-top: 40px;
+    z-index: 3;
+    /* Ensure buttons are on top of other elements */
+    opacity: 0;
+    animation: fadeIn 1s ease-out forwards;
+    animation-delay: 1s;
+    /* Appear after the text */
+}
+
+.hero-buttons a {
+    font-size: 18px;
+    padding: 12px 24px;
+    border-radius: 2rem;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    /* Ensure the vignette effect stays within the button */
+}
+
+/* Black Outline Button */
+.hero-buttons a.menu {
+    border: 2px solid white;
+    color: white;
+    background-color: transparent;
+    width: 6rem;
+}
+
+.hero-buttons a.menu:hover {
+    background-color: black;
+    color: white;
+}
+
+/* White Background with Black Text */
+.hero-buttons a.contact {
+    background-color: white;
+    color: black;
+    width: 6rem;
+}
+
+.hero-buttons a.contact:hover {
+    background-color: black;
+    color: white;
+}
+
+/* Vignette Effect on Hover */
+.hero-buttons a.menu::before,
+.hero-buttons a.contact::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120%;
+    height: 120%;
+    background-color: rgba(68, 68, 68, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.3s ease;
+}
+
+.hero-buttons a.menu:hover::before,
+.hero-buttons a.contact:hover::before {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* CSS for scaling hero section on phones */
+@media (max-width: 768px) {
+    .hero-text h1 {
+        font-size: 2.5rem;
+        /* Reduce font size for smaller screens */
+        text-shadow: 0 0 5px black, 0 0 10px black;
+    }
+
+    .hero-text p {
+        font-size: 1.25rem;
+        /* Adjust paragraph font size */
+        margin-top: 8px;
+        /* Slightly smaller margin */
+    }
+
+    .hero-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        /* Allow buttons to wrap when there is not enough space */
+        justify-content: center;
+        /* Center the buttons horizontally */
+        gap: 1rem;
+        /* Smaller gap between buttons */
+        margin-top: 20px;
+        width: 80%;
+        /* Reduce margin to save space */
+    }
+
+    .hero-buttons a {
+        font-size: 16px;
+        /* Scale down button font size */
+        /* Adjust button padding */
+        width: auto;
+        /* Allow buttons to size naturally */
+        max-width: 200px;
+        /* Optional: limit the width of buttons */
+        text-align: center;
+        /* Ensure text is centered in each button */
+    }
+
+    .hero-buttons a.menu,
+    .hero-buttons a.contact {
+        width: 6rem;
+        /* Make buttons full width on small screens */
+    }
+}
+
+
+/* General Section */
+.menu-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+    padding: 50px 0;
+    background-color: #070c00;
+    box-sizing: border-box;
+}
+
+/* Menu Item Container */
+.menu-item-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    flex-wrap: wrap;
+    /* Allow wrapping on smaller screens */
+}
+
+/* Reverse Order for Reverse Class */
+.menu-item-container.reverse {
+    flex-direction: row-reverse;
+}
+
+/* Menu Image Styling */
+.menu-image {
+    flex: 1;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    z-index: 1;
+}
+
+.menu-image img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.menu-image img.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Menu Container for Text */
+.menu-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(255, 255, 255, 0.5);
+    z-index: 2;
+    margin-left: -100px;
+    font-size: 18px;
+
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.5s ease, transform 0.5s ease
+}
+
+.menu-item-container.reverse .menu-container {
+    margin-left: 0;
+    margin-right: -100px;
+}
+
+/* Header Styling */
+.menu-header {
+    font-size: 32px;
+    /* Increased size */
+    margin: 0 0 10px;
+    color: #0a9618;
+    text-transform: uppercase;
+    border-bottom: 3px solid #0a9640;
+    padding-bottom: 10px;
+}
+
+/* Description Text */
+.menu-description {
+    font-size: 20px;
+    /* Larger description text */
+    color: #555;
+    line-height: 1.8;
+}
+
+/* Menu List Styling */
+.menu-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-list li {
+    font-size: 20px;
+    /* Larger menu item text */
+    color: #333;
+    margin-bottom: 15px;
+    padding-left: 25px;
+    position: relative;
+    line-height: 1.8;
+}
+
+.menu-list li::before {
+    content: "•";
+    color: #0a9640;
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 24px;
+    /* Larger bullet size */
+}
+
+@media (max-width: 768px) {
+    .menu-item-container {
+        flex-direction: column;
+        text-align: center;
+        padding-right: 0px;
+    }
+
+    .menu-image {
+        width: 85%;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+        margin-bottom: -6vh;
+    }
+
+    .menu-image img {
+        width: 100%;
+        height: auto;
+        display: block;
+        margin: 0;
+        padding: 0;
+        margin-bottom: 10px;
+        /* Adds space below the image */
+    }
+
+    .menu-container {
+        text-align: center;
+        margin-left: 0;
+        width: 90%;
+        padding: 5vw;
+        box-sizing: border-box;
+    }
+
+    .menu-list li {
+        font-size: smaller;
+        text-align: left;
+    }
+
+    .menu-item-container.reverse {
+        flex-direction: column;
+    }
+
+    .menu-item-container.reverse .menu-container {
+        margin-left: 0;
+        margin-right: 0px;
+    }
+}
+
+/* Contact Section Styling */
+.contact-section {
+    background-color: #ffffff;
+    color: #f9f9f9;
+    padding: 60px 20px;
+    /* Increased padding for better spacing */
+    text-align: center;
+    box-sizing: border-box;
+    border-top: 5px solid #000000;
+}
+
+.contact-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+}
+
+.contact-info,
+.social-media,
+.footer-links {
+    flex: 1;
+    min-width: 250px;
+    padding: 15px;
+    /* Added padding for inner spacing */
+}
+
+.contact-info h2,
+.social-media h3,
+.footer-links h3 {
+    margin-bottom: 15px;
+    color: #000000;
+    border-bottom: 2px solid #960a0a;
+    display: inline-block;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
+
+.contact-info p,
+.footer-links a {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #000000;
+}
+
+.contact-info a {
+    color: #960a0a;
+    text-decoration: none;
+}
+
+.footer-links a {
+    color: #960a0a;
+    text-decoration: none;
+    margin: 0 10px;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #f44d4d;
+}
+
+.footer-credit {
+    margin-top: 20px;
+    border-top: 1px solid #960a0a;
+    padding-top: 10px;
+    font-size: 14px;
+    color: #bbb;
+}
+
+/* Contact Us Section */
+.contact-us {
+    background-color: #f9f9f9;
+    color: #333;
+    padding: 60px 20px;
+    /* Increased padding for better spacing */
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.contact-h1 {
+    font-size: 36px;
+    color: #000000;
+    margin-bottom: 0vh;
+    margin-top: 0;
+    font-weight: bold;
+}
+
+.contact-p {
+    font-size: 18/16rem;
+    margin-bottom: 2rem;
+    margin-top: 1.5rem;
+    line-height: 1.6;
+    color: #000000;
+    /* Slightly darker text for readability */
+}
+
+.contact-details {
+    margin-bottom: 2rem;
+}
+
+.contact-details p {
+    font-size: 18px;
+    margin: 10px 0;
+    color: #000000;
+}
+
+.contact-details a {
+    color: #f44d4d;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.contact-details a:hover {
+    color: #960a0a;
+}
+
+/* Copyright Section */
+.copyright {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #aaa;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+
+/* Responsive Improvements */
+@media (max-width: 768px) {
+    .contact-container {
+        flex-direction: column;
+        align-items: center;
+        /* Center-align the sections */
+    }
+
+    .contact-info,
+    .social-media,
+    .footer-links {
+        text-align: center;
+    }
+
+    .footer-links a {
+        font-size: 14px;
+        margin: 5px 0;
+    }
+}
