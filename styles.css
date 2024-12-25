@@ -455,11 +455,11 @@ nav.hidden {
 /* CSS for scaling hero section on phones */
 @media (max-width: 768px) {
     .hero-text {
-        width: 90%;
+        width: 95%;
     }
 
     .hero-text h1 {
-        font-size: 2.25rem;
+        font-size: 2.75rem;
         /* Reduce font size for smaller screens */
         text-shadow: 0 0 5px black, 0 0 10px black;
     }
