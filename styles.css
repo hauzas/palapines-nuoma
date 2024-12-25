@@ -454,16 +454,21 @@ nav.hidden {
 
 /* CSS for scaling hero section on phones */
 @media (max-width: 768px) {
+    .hero-text {
+        width: 90%;
+    }
+
     .hero-text h1 {
-        font-size: 2.5rem;
+        font-size: 2.25rem;
         /* Reduce font size for smaller screens */
         text-shadow: 0 0 5px black, 0 0 10px black;
     }
 
     .hero-text p {
-        font-size: 1.25rem;
+        font-size: 1.1rem;
         /* Adjust paragraph font size */
         margin-top: 8px;
+        justify-content: center;
         /* Slightly smaller margin */
     }
 
@@ -476,17 +481,16 @@ nav.hidden {
         gap: 1rem;
         /* Smaller gap between buttons */
         margin-top: 20px;
-        width: 80%;
+        width: 90%;
         /* Reduce margin to save space */
     }
 
     .hero-buttons a {
-        font-size: 16px;
+        font-size: 0.75rem;
         /* Scale down button font size */
         /* Adjust button padding */
         width: auto;
         /* Allow buttons to size naturally */
-        max-width: 200px;
         /* Optional: limit the width of buttons */
         text-align: center;
         /* Ensure text is centered in each button */
@@ -494,7 +498,7 @@ nav.hidden {
 
     .hero-buttons a.menu,
     .hero-buttons a.contact {
-        width: 6rem;
+        width: 4.5rem;
         /* Make buttons full width on small screens */
     }
 }
