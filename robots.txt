@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://palapines-nuoma.lt/sitemap.xml
